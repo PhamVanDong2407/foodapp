@@ -137,7 +137,7 @@ class _TextFFSignupState extends State<TextFFSignup> {
           height: 50,
           child: ElevatedButton(
             onPressed: () {
-              // Xử lý đăng ký tài khoản
+              Get.toNamed('/login');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xffE95322),

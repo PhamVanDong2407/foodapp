@@ -116,7 +116,9 @@ class _TextFFSignupState extends State<TextFFSignup> {
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed('/login');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xffE95322),
               shape: RoundedRectangleBorder(
