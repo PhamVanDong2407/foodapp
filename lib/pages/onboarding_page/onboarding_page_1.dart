@@ -3,32 +3,27 @@ import 'package:get/get.dart';
 import '../../components/onboarding_page/content.dart';
 import '../../components/onboarding_page/image_bgr.dart';
 
-class OnboardingPage1 extends StatefulWidget {
+class OnboardingPage1 extends StatelessWidget {
   const OnboardingPage1({super.key});
 
-  @override
-  State<OnboardingPage1> createState() => _OnboardingPage1State();
-}
-
-class _OnboardingPage1State extends State<OnboardingPage1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            // Background image
+            // Hình nền
             const Positioned.fill(
               child: ImageBgr(img: 'assets/images/onboarding_1.png'),
             ),
 
-            // Skip button
+            // Nút Skip
             Positioned(
               top: 20,
               right: 20,
               child: GestureDetector(
                 onTap: () {
-                  // Navigate to next screen or skip onboarding
+                  Get.toNamed('/welcome');
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -49,14 +44,13 @@ class _OnboardingPage1State extends State<OnboardingPage1> {
               ),
             ),
 
-            // Bottom sheet - fixed at bottom
+            // Bottom Sheet
             Positioned(
               left: 0,
               right: 0,
               bottom: 0,
               child: Container(
                 height: 320,
-                width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -70,14 +64,13 @@ class _OnboardingPage1State extends State<OnboardingPage1> {
                     imgBottomsheet: 'assets/images/icon_onboarding_1.png',
                     textTitleBottomsheet: 'Order For Food',
                     textBottomsheet:
-                        'Lorem ipsum dolor sit amet, conse ctetur  \nadipiscing elit, sed do eiusmod tempor \nincididunt ut labore et dolore magna.',
+                        'Order your favorite food with just a few taps.',
                     btnSheet: () {
                       Get.toNamed('/onboarding2');
                     },
                     textBtnSheet: 'Next',
                     currentPage: 1,
-                    // First page (now 1-indexed)
-                    totalPages: 3, // Total of 3 pages
+                    totalPages: 3,
                   ),
                 ),
               ),

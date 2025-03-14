@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/launch_page/button.dart';
 import '../../components/launch_page/text_welcome_page.dart';
+import 'package:get/get.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -26,13 +27,17 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 30),
               Button(
                 text: 'Log in',
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/login');
+                },
                 color: const Color(0xffF5CB58),
               ),
               const SizedBox(height: 5),
               Button(
                 text: 'Sign Up',
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/signup');
+                },
                 color: const Color(0xffF3E9B5),
               ),
             ],

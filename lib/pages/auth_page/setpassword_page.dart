@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/auth_page/customTextField.dart';
 import '../../components/auth_page/text_title.dart';
+import 'package:get/get.dart';
 
 class SetpasswordPage extends StatelessWidget {
   const SetpasswordPage({super.key});
@@ -12,9 +13,15 @@ class SetpasswordPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 30, left: 30, right: 30),
-              child: TextTitle(text_Title_Auth: 'Set Password'),
+            Padding(
+              padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+              child: TextTitle(
+                text_Title_Auth: 'Set Password',
+                onPressed: () {
+                  Get.toNamed('/login');
+                },
+                img_auth_page: 'assets/images/back_icon.png',
+              ),
             ),
             const SizedBox(height: 40),
             Expanded(

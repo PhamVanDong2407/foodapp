@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foodapp/pages/auth_page/login_page.dart';
-import 'package:foodapp/pages/auth_page/setpassword_page.dart';
-import 'package:foodapp/pages/auth_page/signup_page.dart';
 import 'package:foodapp/pages/launch_page/splash_page.dart';
-import 'package:foodapp/pages/launch_page/welcome_page.dart';
-import 'package:foodapp/pages/onboarding_page/onboarding_page_1.dart';
-import 'package:foodapp/pages/onboarding_page/onboarding_page_2.dart';
-import 'package:foodapp/pages/onboarding_page/onboarding_page_3.dart';
+import 'package:foodapp/routes/route.dart';
+
 import 'package:get/get.dart';
 
 void main() {
@@ -18,9 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SetpasswordPage(),
+      getPages: pages,
+      home: const SplashPage(),
     );
   }
 }

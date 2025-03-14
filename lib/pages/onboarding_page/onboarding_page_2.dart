@@ -12,18 +12,18 @@ class OnboardingPage2 extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background image
+            // Hình nền
             const Positioned.fill(
               child: ImageBgr(img: 'assets/images/onboarding_2.png'),
             ),
 
-            // Skip button
+            // Nút Skip
             Positioned(
               top: 20,
               right: 20,
               child: GestureDetector(
                 onTap: () {
-                  // Navigate to next screen or skip onboarding
+                  Get.toNamed('/welcome');
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -44,14 +44,13 @@ class OnboardingPage2 extends StatelessWidget {
               ),
             ),
 
-            // Bottom sheet - fixed at bottom
+            // Bottom Sheet
             Positioned(
               left: 0,
               right: 0,
               bottom: 0,
               child: Container(
                 height: 320,
-                width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -65,14 +64,13 @@ class OnboardingPage2 extends StatelessWidget {
                     imgBottomsheet: 'assets/images/icon_onboarding_2.png',
                     textTitleBottomsheet: 'Easy Payment',
                     textBottomsheet:
-                        'Lorem ipsum dolor sit amet, conse ctetur  \nadipiscing elit, sed do eiusmod tempor \nincididunt ut labore et dolore magna.',
+                        'Pay effortlessly with multiple payment methods.',
                     btnSheet: () {
                       Get.toNamed('/onboarding3');
                     },
                     textBtnSheet: 'Next',
                     currentPage: 2,
-                    // First page (now 1-indexed)
-                    totalPages: 3, // Total of 3 pages
+                    totalPages: 3,
                   ),
                 ),
               ),

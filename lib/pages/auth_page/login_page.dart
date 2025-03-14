@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/components/auth_page/SocialButton.dart';
 import 'package:foodapp/components/auth_page/text_title.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -13,9 +14,16 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.only(top: 30, left: 30, right: 30),
-              child: TextTitle(
-                text_Title_Auth: 'Log In',
+              padding: EdgeInsets.only(top: 30),
+              child: Center(
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 40),
@@ -55,7 +63,7 @@ class LoginPage extends StatelessWidget {
                         SizedBox(height: 40),
                         TextFFLogin(),
                         SizedBox(height: 30),
-                        orLoginDiff(), // Đã căn giữa
+                        orLoginDiff(),
                         SizedBox(height: 30),
                       ],
                     ),
@@ -188,14 +196,19 @@ class _TextFFLoginState extends State<TextFFLogin> {
           ),
         ),
         const SizedBox(height: 20),
-        const Align(
+        Align(
           alignment: Alignment.centerRight,
-          child: Text(
-            'Forgot Password?',
-            style: TextStyle(
-              color: Color(0xFFE95322),
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed('/setpassword');
+            },
+            child: const Text(
+              'Forgot Password?',
+              style: TextStyle(
+                color: Color(0xFFE95322),
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
             ),
           ),
         ),
@@ -249,24 +262,26 @@ class orLoginDiff extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 20),
-        RichText(
-          text: const TextSpan(
-            text: "Don't have an account? ",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-            ),
-            children: [
-              TextSpan(
-                text: "Sign up",
-                style: TextStyle(
-                  color: Color(0xffE95322),
-                  fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () {
+            Get.toNamed('/signup');
+          },
+          child: RichText(
+            text: const TextSpan(
+              text: "Don't have an account? ",
+              style: TextStyle(color: Colors.black, fontSize: 16),
+              children: [
+                TextSpan(
+                  text: "Sign up",
+                  style: TextStyle(
+                    color: Color(0xffE95322),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        )
       ],
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../components/auth_page/SocialButton.dart';
 import '../../components/auth_page/customTextField.dart';
 import '../../components/auth_page/text_title.dart';
@@ -13,9 +15,15 @@ class SignupPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 30, left: 30, right: 30),
-              child: TextTitle(text_Title_Auth: 'New Account'),
+            Padding(
+              padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+              child: TextTitle(
+                text_Title_Auth: 'New Account',
+                onPressed: () {
+                  Get.toNamed('/login');
+                },
+                img_auth_page: 'assets/images/back_icon.png',
+              ),
             ),
             const SizedBox(height: 20),
             Expanded(
@@ -172,24 +180,26 @@ class orSignupDiff extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        RichText(
-          text: const TextSpan(
-            text: "Already have an account? ",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-            ),
-            children: [
-              TextSpan(
-                text: "Log in",
-                style: TextStyle(
-                  color: Color(0xffE95322),
-                  fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () {
+            Get.toNamed('/login');
+          },
+          child: RichText(
+            text: const TextSpan(
+              text: "Already have an account? ",
+              style: TextStyle(color: Colors.black, fontSize: 16),
+              children: [
+                TextSpan(
+                  text: "Log in",
+                  style: TextStyle(
+                    color: Color(0xffE95322),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        )
       ],
     );
   }

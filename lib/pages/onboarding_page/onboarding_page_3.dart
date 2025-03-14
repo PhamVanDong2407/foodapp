@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../components/onboarding_page/content.dart';
 import '../../components/onboarding_page/image_bgr.dart';
 
@@ -11,19 +12,17 @@ class OnboardingPage3 extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background image
+            // Hình nền
             const Positioned.fill(
               child: ImageBgr(img: 'assets/images/onboarding_3.png'),
             ),
-
-            // Bottom sheet - fixed at bottom
+            // Bottom Sheet
             Positioned(
               left: 0,
               right: 0,
               bottom: 0,
               child: Container(
                 height: 320,
-                width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -37,14 +36,14 @@ class OnboardingPage3 extends StatelessWidget {
                     imgBottomsheet: 'assets/images/icon_onboarding_3.png',
                     textTitleBottomsheet: 'Fast Delivery',
                     textBottomsheet:
-                        'Lorem ipsum dolor sit amet, conse ctetur  \nadipiscing elit, sed do eiusmod tempor \nincididunt ut labore et dolore magna.',
+                        'Get your food delivered to your doorstep quickly.',
                     btnSheet: () {
-                      // Navigate to next page
+                      Get.toNamed(
+                          '/welcome');
                     },
-                    textBtnSheet: 'Next',
+                    textBtnSheet: 'Get Started',
                     currentPage: 3,
-                    // First page (now 1-indexed)
-                    totalPages: 3, // Total of 3 pages
+                    totalPages: 3,
                   ),
                 ),
               ),

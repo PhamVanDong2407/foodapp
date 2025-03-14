@@ -8,7 +8,7 @@ import 'package:foodapp/pages/onboarding_page/onboarding_page_2.dart';
 import 'package:foodapp/pages/onboarding_page/onboarding_page_3.dart';
 import 'package:get/get.dart';
 
-var pages = [
+final pages = [
   GetPage(
     name: '/splash',
     page: () => const SplashPage(),
