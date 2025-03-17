@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.only(top: 30),
               child: Center(
                 child: Text(
-                  'Login',
+                  'Đăng Nhập',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
                       children: [
                         SizedBox(height: 40),
                         Text(
-                          'Welcome',
+                          'Chào mừng quay trở lại!',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 28,
@@ -91,7 +91,7 @@ class TextFFLogin extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Email or Mobile Number',
+          'Email hoặc số điện thoại',
           style: TextStyle(
             color: Color(0xFF505050),
             fontWeight: FontWeight.w700,
@@ -108,7 +108,7 @@ class TextFFLogin extends StatelessWidget {
           decoration: InputDecoration(
             filled: true,
             fillColor: const Color(0xffF3E9B5),
-            hintText: 'Enter your email or phone number',
+            hintText: 'Nhập email hoặc số điện thoại',
             hintStyle: TextStyle(
               color: Colors.grey[500],
               fontWeight: FontWeight.w400,
@@ -127,7 +127,7 @@ class TextFFLogin extends StatelessWidget {
         ),
         const SizedBox(height: 25),
         const Text(
-          'Password',
+          'Mật khẩu',
           style: TextStyle(
             color: Color(0xFF505050),
             fontWeight: FontWeight.w700,
@@ -145,7 +145,7 @@ class TextFFLogin extends StatelessWidget {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color(0xffF3E9B5),
-                hintText: 'Enter your password',
+                hintText: 'Nhập mật khẩu',
                 hintStyle: TextStyle(
                   color: Colors.grey[500],
                   fontWeight: FontWeight.w400,
@@ -182,7 +182,7 @@ class TextFFLogin extends StatelessWidget {
               Get.toNamed('/setpassword');
             },
             child: const Text(
-              'Forgot Password?',
+              'Quên mật khẩu?',
               style: TextStyle(
                 color: Color(0xFFE95322),
                 fontWeight: FontWeight.w500,
@@ -211,7 +211,7 @@ class TextFFLogin extends StatelessWidget {
                 child: loginController.isLoading.value
                     ? const CircularProgressIndicator(color: Colors.white)
                     : const Text(
-                        'Log In',
+                        'Đăng Nhập',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -236,7 +236,7 @@ class orLoginDiff extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('Or sign up with'),
+        const Text('Hoặc đăng nhập bằng'),
         const SizedBox(height: 10),
         const Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -254,11 +254,11 @@ class orLoginDiff extends StatelessWidget {
           },
           child: RichText(
             text: const TextSpan(
-              text: "Don't have an account? ",
+              text: "Bạn chưa có tài khoản? ",
               style: TextStyle(color: Colors.black, fontSize: 16),
               children: [
                 TextSpan(
-                  text: "Sign up",
+                  text: "Đăng ký",
                   style: TextStyle(
                     color: Color(0xffE95322),
                     fontWeight: FontWeight.bold,

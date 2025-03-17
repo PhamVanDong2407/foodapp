@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../components/auth_page/customTextField.dart';
 import '../../components/auth_page/text_title.dart';
-import 'package:get/get.dart';
 
-class SetpasswordPage extends StatelessWidget {
+class SetpasswordPage extends StatefulWidget {
   const SetpasswordPage({super.key});
 
+  @override
+  State<SetpasswordPage> createState() => _SetpasswordPageState();
+}
+
+class _SetpasswordPageState extends State<SetpasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +22,7 @@ class SetpasswordPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
               child: TextTitle(
-                text_Title_Auth: 'Set Password',
+                text_Title_Auth: 'Đặt lại mật khẩu',
                 onPressed: () {
                   Get.toNamed('/login');
                 },
@@ -38,7 +44,7 @@ class SetpasswordPage extends StatelessWidget {
                       color: Color(0x20000000),
                       blurRadius: 10,
                       offset: Offset(0, -3),
-                    )
+                    ),
                   ],
                 ),
                 child: const SingleChildScrollView(
@@ -70,16 +76,85 @@ class TextFFSignup extends StatefulWidget {
 }
 
 class _TextFFSignupState extends State<TextFFSignup> {
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmpasswordController =
-      TextEditingController();
-  bool _obscureText = true;
+  final TextEditingController _emailController = TextEditingController();
+  String? _emailError; // Biến lưu thông điệp lỗi
+  bool _isLoading = false;
 
   @override
   void dispose() {
-    _passwordController.dispose();
-    _confirmpasswordController.dispose();
+    _emailController.dispose();
     super.dispose();
+  }
+
+  Future<void> passwordReset() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: _emailController.text.trim(),
+      );
+
+      Get.snackbar(
+        'Thành công',
+        'Vui lòng kiểm tra email để đặt lại mật khẩu.',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+      Get.toNamed('/login');
+    } on FirebaseAuthException catch (e) {
+      print('Lỗi Firebase: ${e.code} - ${e.message}');
+      String errorMessage;
+
+      switch (e.code) {
+        case 'invalid-email':
+          errorMessage = 'Email không hợp lệ.';
+          break;
+        case 'user-not-found':
+          errorMessage = 'Không tìm thấy tài khoản với email này.';
+          break;
+        case 'network-request-failed':
+          errorMessage = 'Lỗi kết nối mạng. Hãy thử lại sau.';
+          break;
+        case 'too-many-requests':
+          errorMessage = 'Bạn đã gửi quá nhiều yêu cầu. Hãy thử lại sau.';
+          break;
+        default:
+          errorMessage = 'Có lỗi xảy ra, vui lòng thử lại.';
+      }
+
+      Get.snackbar(
+        'Lỗi',
+        errorMessage,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _handleSetPassword() {
+    final email = _emailController.text.trim();
+
+    if (email.isEmpty) {
+      setState(() {
+        _emailError = 'Email không được để trống';
+      });
+    } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email)) {
+      setState(() {
+        _emailError = 'Vui lòng nhập email hợp lệ';
+      });
+    } else {
+      setState(() {
+        _emailError = null; // Xóa lỗi nếu hợp lệ
+      });
+      // Gọi hàm passwordReset() để thực hiện reset password
+      passwordReset();
+    }
   }
 
   @override
@@ -88,52 +163,46 @@ class _TextFFSignupState extends State<TextFFSignup> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomTextField(
-          controller: _passwordController,
-          label: 'Password',
-          hintText: 'Enter your password',
-          isPassword: true,
-          obscureText: _obscureText,
-          toggleObscureText: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
+          controller: _emailController,
+          label: 'Email',
+          hintText: 'Nhập email của bạn',
+          keyboardType: TextInputType.emailAddress,
         ),
-        CustomTextField(
-          controller: _confirmpasswordController,
-          label: 'Confirm Password',
-          hintText: 'Enter your password',
-          isPassword: true,
-          obscureText: _obscureText,
-          toggleObscureText: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-        ),
-        const SizedBox(height: 10),
+        if (_emailError != null) // Hiển thị lỗi nếu có
+          Padding(
+            padding: const EdgeInsets.only(top: 3.0),
+            child: Text(
+              _emailError!,
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        const SizedBox(height: 20),
         SizedBox(
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {
-              Get.toNamed('/login');
-            },
+            onPressed: _isLoading ? null : _handleSetPassword,
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xffE95322),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
               elevation: 2,
+              disabledBackgroundColor: Colors.grey,
             ),
-            child: const Text(
-              'Create New Password',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: _isLoading
+                ? const CircularProgressIndicator(color: Colors.white)
+                : const Text(
+                    'Đặt lại mât khẩu',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
           ),
         ),
       ],

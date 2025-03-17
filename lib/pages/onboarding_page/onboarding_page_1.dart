@@ -17,7 +17,7 @@ class OnboardingPage1 extends StatelessWidget {
               child: ImageBgr(img: 'assets/images/onboarding_1.png'),
             ),
 
-            // Nút Skip
+            // Nút Bỏ Qua
             Positioned(
               top: 20,
               right: 20,
@@ -29,7 +29,7 @@ class OnboardingPage1 extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      "Skip",
+                      "Bỏ qua",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     const SizedBox(width: 8),
@@ -62,13 +62,13 @@ class OnboardingPage1 extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20),
                   child: ContentBottomsheet(
                     imgBottomsheet: 'assets/images/icon_onboarding_1.png',
-                    textTitleBottomsheet: 'Order For Food',
+                    textTitleBottomsheet: 'Đặt Món Ăn',
                     textBottomsheet:
-                        'Order your favorite food with just a few taps.',
+                        'Đặt món ăn yêu thích của bạn chỉ với vài thao tác.',
                     btnSheet: () {
                       Get.toNamed('/onboarding2');
                     },
-                    textBtnSheet: 'Next',
+                    textBtnSheet: 'Tiếp theo',
                     currentPage: 1,
                     totalPages: 3,
                   ),

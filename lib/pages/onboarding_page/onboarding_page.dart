@@ -30,21 +30,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       "image": "assets/images/onboarding_1.png",
       "icon": "assets/images/icon_onboarding_1.png",
-      "title": "Order For Food",
+      "title": "Đặt Món Ăn",
       "description":
-          "Order your favorite food with just a few taps on your phone.",
+          "Đặt món ăn yêu thích của bạn chỉ với vài thao tác trên điện thoại.",
     },
     {
       "image": "assets/images/onboarding_2.png",
       "icon": "assets/images/icon_onboarding_2.png",
-      "title": "Easy Payment",
-      "description": "Pay effortlessly with multiple payment methods.",
+      "title": "Thanh Toán Dễ Dàng",
+      "description": "Thanh toán thuận tiện với nhiều phương thức khác nhau.",
     },
     {
       "image": "assets/images/onboarding_3.png",
       "icon": "assets/images/icon_onboarding_3.png",
-      "title": "Fast Delivery",
-      "description": "Get your food delivered to your doorstep quickly.",
+      "title": "Giao Hàng Nhanh",
+      "description": "Nhận món ăn tại nhà trong thời gian nhanh chóng.",
     },
   ];
 
@@ -103,8 +103,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             },
                             textBtnSheet:
                                 _currentPage == onboardingData.length - 1
-                                    ? "Get Started"
-                                    : "Next",
+                                    ? "Bắt đầu"
+                                    : "Tiếp theo",
                             currentPage: _currentPage + 1,
                             totalPages: onboardingData.length,
                           ),
@@ -115,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 );
               },
             ),
-            // Nút Skip
+            // Nút Bỏ Qua
             Positioned(
               top: 20,
               right: 20,
@@ -127,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      "Skip",
+                      "Bỏ qua",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     const SizedBox(width: 8),

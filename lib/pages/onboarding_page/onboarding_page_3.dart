@@ -34,14 +34,13 @@ class OnboardingPage3 extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20),
                   child: ContentBottomsheet(
                     imgBottomsheet: 'assets/images/icon_onboarding_3.png',
-                    textTitleBottomsheet: 'Fast Delivery',
+                    textTitleBottomsheet: 'Giao Hàng Nhanh',
                     textBottomsheet:
-                        'Get your food delivered to your doorstep quickly.',
+                        'Nhận món ăn tại nhà trong thời gian nhanh chóng.',
                     btnSheet: () {
-                      Get.toNamed(
-                          '/welcome');
+                      Get.toNamed('/welcome');
                     },
-                    textBtnSheet: 'Get Started',
+                    textBtnSheet: 'Bắt đầu',
                     currentPage: 3,
                     totalPages: 3,
                   ),

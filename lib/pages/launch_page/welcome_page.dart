@@ -22,11 +22,11 @@ class WelcomePage extends StatelessWidget {
               const SizedBox(height: 30),
               // Sử dụng TextWidget thay vì text
               const TextWidget(
-                'Lorem ipsum dolor sit amet, consectetur \nadipiscing elit, sed do eiusmod.',
+                'Chào mừng bạn đến với ứng dụng của chúng tôi! \nHãy bắt đầu trải nghiệm ngay.',
               ),
               const SizedBox(height: 30),
               Button(
-                text: 'Log in',
+                text: 'Đăng nhập',
                 onPressed: () {
                   Get.toNamed('/login');
                 },
@@ -34,7 +34,7 @@ class WelcomePage extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Button(
-                text: 'Sign Up',
+                text: 'Đăng ký',
                 onPressed: () {
                   Get.toNamed('/signup');
                 },

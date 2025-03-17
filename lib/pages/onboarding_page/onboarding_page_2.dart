@@ -17,7 +17,7 @@ class OnboardingPage2 extends StatelessWidget {
               child: ImageBgr(img: 'assets/images/onboarding_2.png'),
             ),
 
-            // Nút Skip
+            // Nút Bỏ Qua
             Positioned(
               top: 20,
               right: 20,
@@ -29,7 +29,7 @@ class OnboardingPage2 extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      "Skip",
+                      "Bỏ qua",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     const SizedBox(width: 8),
@@ -62,13 +62,13 @@ class OnboardingPage2 extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20),
                   child: ContentBottomsheet(
                     imgBottomsheet: 'assets/images/icon_onboarding_2.png',
-                    textTitleBottomsheet: 'Easy Payment',
+                    textTitleBottomsheet: 'Thanh Toán Dễ Dàng',
                     textBottomsheet:
-                        'Pay effortlessly with multiple payment methods.',
+                        'Thanh toán thuận tiện với nhiều phương thức khác nhau.',
                     btnSheet: () {
                       Get.toNamed('/onboarding3');
                     },
-                    textBtnSheet: 'Next',
+                    textBtnSheet: 'Tiếp theo',
                     currentPage: 2,
                     totalPages: 3,
                   ),
