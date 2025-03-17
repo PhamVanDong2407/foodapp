@@ -18,7 +18,7 @@ class SignupPage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: TextTitle(
                 text_Title_Auth: 'Tạo tài khoản',
                 onPressed: () {
@@ -28,7 +28,6 @@ class SignupPage extends StatelessWidget {
                 img_auth_page: 'assets/images/back_icon.png',
               ),
             ),
-            const SizedBox(height: 20),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -48,14 +47,15 @@ class SignupPage extends StatelessWidget {
                 ),
                 child: const SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextFFSignup(),
-                        SizedBox(height: 20),
-                        orSignupDiff(),
-                        SizedBox(height: 20),
+                        SizedBox(height: 15),
+                        OrSignupDiff(),
+                        SizedBox(height: 10),
                       ],
                     ),
                   ),
@@ -79,89 +79,105 @@ class TextFFSignup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Obx(() => CustomTextField(
-              controller: signupController.fullname,
-              label: 'Họ và tên',
-              hintText: 'Nhập họ và tên',
-              errorText: signupController.fullnameError.value.isEmpty
-                  ? null
-                  : signupController.fullnameError.value,
-            )),
-        Obx(() => CustomTextField(
-              controller: signupController.email,
-              label: 'Email',
-              hintText: 'Nhập email',
-              errorText: signupController.emailError.value.isEmpty
-                  ? null
-                  : signupController.emailError.value,
-            )),
-        Obx(() => CustomTextField(
-              controller: signupController.password,
-              label: 'Mật khẩu',
-              hintText: 'Nhập mật khẩu',
-              isPassword: true,
-              obscureText: signupController.isPasswordHidden.value,
-              toggleObscureText: () {
-                signupController.togglePasswordVisibility();
-              },
-              errorText: signupController.passwordError.value.isEmpty
-                  ? null
-                  : signupController.passwordError.value,
-            )),
-        Obx(() => CustomTextField(
-              controller: signupController.mobilenumber,
-              label: 'Số điện thoại',
-              hintText: 'Nhập số điện thoại',
-              keyboardType: TextInputType.phone,
-              errorText: signupController.mobileError.value.isEmpty
-                  ? null
-                  : signupController.mobileError.value,
-            )),
-        Obx(() => CustomTextField(
-              controller: signupController.dateofbirth,
-              label: 'Ngày sinh',
-              hintText: 'Nhập ngày sinh',
-              keyboardType: TextInputType.datetime,
-              errorText: signupController.dobError.value.isEmpty
-                  ? null
-                  : signupController.dobError.value,
-            )),
+        Obx(
+          () => CustomTextField(
+            controller: signupController.fullname,
+            label: 'Họ và tên',
+            hintText: 'Nhập họ và tên',
+            errorText: signupController.fullnameError.value.isEmpty
+                ? null
+                : signupController.fullnameError.value,
+          ),
+        ),
         const SizedBox(height: 10),
+        Obx(
+          () => CustomTextField(
+            controller: signupController.email,
+            label: 'Email',
+            hintText: 'Nhập email',
+            errorText: signupController.emailError.value.isEmpty
+                ? null
+                : signupController.emailError.value,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Obx(
+          () => CustomTextField(
+            controller: signupController.password,
+            label: 'Mật khẩu',
+            hintText: 'Nhập mật khẩu',
+            isPassword: true,
+            obscureText: signupController.isPasswordHidden.value,
+            toggleObscureText: () {
+              signupController.togglePasswordVisibility();
+            },
+            errorText: signupController.passwordError.value.isEmpty
+                ? null
+                : signupController.passwordError.value,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Obx(
+          () => CustomTextField(
+            controller: signupController.mobilenumber,
+            label: 'Số điện thoại',
+            hintText: 'Nhập số điện thoại',
+            keyboardType: TextInputType.phone,
+            errorText: signupController.mobileError.value.isEmpty
+                ? null
+                : signupController.mobileError.value,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Obx(
+          () => CustomTextField(
+            controller: signupController.dateofbirth,
+            label: 'Ngày sinh',
+            hintText: 'Nhập ngày sinh',
+            keyboardType: TextInputType.datetime,
+            errorText: signupController.dobError.value.isEmpty
+                ? null
+                : signupController.dobError.value,
+          ),
+        ),
+        const SizedBox(height: 15),
         SizedBox(
           width: double.infinity,
-          height: 50,
-          child: Obx(() => ElevatedButton(
-                onPressed: signupController.isLoading.value
-                    ? null
-                    : () {
-                        signupController.signUp();
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffE95322),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 2,
+          height: 45,
+          child: Obx(
+            () => ElevatedButton(
+              onPressed: signupController.isLoading.value
+                  ? null
+                  : () {
+                      signupController.signUp();
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xffE95322),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: signupController.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'Đăng ký',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                elevation: 2,
+              ),
+              child: signupController.isLoading.value
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text(
+                      'Đăng ký',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-              )),
+                    ),
+            ),
+          ),
         ),
       ],
     );
   }
 }
 
-class orSignupDiff extends StatelessWidget {
-  const orSignupDiff({super.key});
+class OrSignupDiff extends StatelessWidget {
+  const OrSignupDiff({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -169,14 +185,22 @@ class orSignupDiff extends StatelessWidget {
 
     return Column(
       children: [
-        const Text('Hoặc đăng ký bằng'),
-        const SizedBox(height: 10),
+        const Text('Hoặc đăng ký bằng', style: TextStyle(fontSize: 14)),
+        const SizedBox(height: 8),
         const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SocialButton(imagePath: 'assets/images/Gmail.png'),
-            SocialButton(imagePath: 'assets/images/Facebook.png'),
-            SocialButton(imagePath: 'assets/images/Mark.png'),
+            SocialButton(
+              imagePath: 'assets/images/Gmail.png',
+            ),
+            SizedBox(width: 10),
+            SocialButton(
+              imagePath: 'assets/images/Facebook.png',
+            ),
+            SizedBox(width: 10),
+            SocialButton(
+              imagePath: 'assets/images/Mark.png',
+            ),
           ],
         ),
         const SizedBox(height: 10),
@@ -188,7 +212,7 @@ class orSignupDiff extends StatelessWidget {
           child: RichText(
             text: const TextSpan(
               text: "Bạn đã có tài khoản? ",
-              style: TextStyle(color: Colors.black, fontSize: 16),
+              style: TextStyle(color: Colors.black, fontSize: 14),
               children: [
                 TextSpan(
                   text: "Đăng nhập",
@@ -200,7 +224,7 @@ class orSignupDiff extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

@@ -4,7 +4,7 @@ import '../../components/launch_page/text_welcome_page.dart';
 import 'package:get/get.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
