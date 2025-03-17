@@ -31,7 +31,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       "image": "assets/images/onboarding_1.png",
       "icon": "assets/images/icon_onboarding_1.png",
       "title": "Order For Food",
-      "description": "Order your favorite food with just a few taps on your phone.",
+      "description":
+          "Order your favorite food with just a few taps on your phone.",
     },
     {
       "image": "assets/images/onboarding_2.png",
@@ -100,9 +101,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 Get.offNamed('/login');
                               }
                             },
-                            textBtnSheet: _currentPage == onboardingData.length - 1
-                                ? "Get Started"
-                                : "Next",
+                            textBtnSheet:
+                                _currentPage == onboardingData.length - 1
+                                    ? "Get Started"
+                                    : "Next",
                             currentPage: _currentPage + 1,
                             totalPages: onboardingData.length,
                           ),

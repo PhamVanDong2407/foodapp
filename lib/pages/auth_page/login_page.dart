@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/components/auth_page/SocialButton.dart';
-import 'package:foodapp/components/auth_page/text_title.dart';
 import 'package:get/get.dart';
+import '../../controllers/auth/login_controller.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LoginController loginController = Get.put(LoginController());
+
     return Scaffold(
       backgroundColor: const Color(0xffF5CB58),
       body: SafeArea(
@@ -78,27 +80,13 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class TextFFLogin extends StatefulWidget {
+class TextFFLogin extends StatelessWidget {
   const TextFFLogin({super.key});
 
   @override
-  State<TextFFLogin> createState() => _TextFFLoginState();
-}
-
-class _TextFFLoginState extends State<TextFFLogin> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _obscureText = true;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final LoginController loginController = Get.find();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -112,7 +100,7 @@ class _TextFFLoginState extends State<TextFFLogin> {
         ),
         const SizedBox(height: 12),
         TextFormField(
-          controller: _emailController,
+          controller: loginController.email,
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w500,
@@ -131,14 +119,6 @@ class _TextFFLoginState extends State<TextFFLogin> {
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide.none,
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: const BorderSide(color: Color(0xffE95322), width: 1),
-            ),
           ),
         ),
         const SizedBox(height: 25),
@@ -151,50 +131,40 @@ class _TextFFLoginState extends State<TextFFLogin> {
           ),
         ),
         const SizedBox(height: 12),
-        TextFormField(
-          controller: _passwordController,
-          obscureText: _obscureText,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: const Color(0xffF3E9B5),
-            hintText: 'Enter your password',
-            hintStyle: TextStyle(
-              color: Colors.grey[500],
-              fontWeight: FontWeight.w400,
-            ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: const BorderSide(color: Color(0xffE95322), width: 1),
-            ),
-            suffixIcon: IconButton(
-              icon: Icon(
-                _obscureText
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined,
-                color: const Color(0xffE95322),
+        Obx(() => TextFormField(
+              controller: loginController.password,
+              obscureText: loginController.isPasswordHidden.value,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
               ),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            ),
-          ),
-        ),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color(0xffF3E9B5),
+                hintText: 'Enter your password',
+                hintStyle: TextStyle(
+                  color: Colors.grey[500],
+                  fontWeight: FontWeight.w400,
+                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    loginController.isPasswordHidden.value
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: const Color(0xffE95322),
+                  ),
+                  onPressed: () {
+                    loginController.togglePasswordVisibility();
+                  },
+                ),
+              ),
+            )),
         const SizedBox(height: 20),
         Align(
           alignment: Alignment.centerRight,
@@ -216,26 +186,30 @@ class _TextFFLoginState extends State<TextFFLogin> {
         SizedBox(
           width: double.infinity,
           height: 50,
-          child: ElevatedButton(
-            onPressed: () {
-              // Xử lý logic đăng nhập
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xffE95322),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              elevation: 2,
-            ),
-            child: const Text(
-              'Log In',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          child: Obx(() => ElevatedButton(
+                onPressed: loginController.isLoading.value
+                    ? null
+                    : () {
+                        loginController.onLogin();
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffE95322),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 2,
+                ),
+                child: loginController.isLoading.value
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                        'Log In',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+              )),
         ),
       ],
     );

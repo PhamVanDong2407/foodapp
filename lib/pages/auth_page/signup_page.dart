@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../components/auth_page/SocialButton.dart';
 import '../../components/auth_page/customTextField.dart';
 import '../../components/auth_page/text_title.dart';
+import '../../controllers/auth/signup_controller.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final SignupController signupController = Get.put(SignupController());
+
     return Scaffold(
       backgroundColor: const Color(0xffF5CB58),
       body: SafeArea(
@@ -66,67 +68,44 @@ class SignupPage extends StatelessWidget {
   }
 }
 
-class TextFFSignup extends StatefulWidget {
+class TextFFSignup extends StatelessWidget {
   const TextFFSignup({super.key});
 
   @override
-  State<TextFFSignup> createState() => _TextFFSignupState();
-}
-
-class _TextFFSignupState extends State<TextFFSignup> {
-  final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _mobileController = TextEditingController();
-  final TextEditingController _dobController = TextEditingController();
-
-  bool _obscureText = true;
-
-  @override
-  void dispose() {
-    _fullNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _mobileController.dispose();
-    _dobController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final SignupController signupController = Get.find();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomTextField(
-          controller: _fullNameController,
+          controller: signupController.fullname,
           label: 'Full Name',
           hintText: 'Enter your full name',
         ),
         CustomTextField(
-          controller: _emailController,
+          controller: signupController.email,
           label: 'Email',
           hintText: 'Enter your email',
         ),
+        Obx(() => CustomTextField(
+              controller: signupController.password,
+              label: 'Password',
+              hintText: 'Enter your password',
+              isPassword: true,
+              obscureText: signupController.isPasswordHidden.value,
+              toggleObscureText: () {
+                signupController.togglePasswordVisibility();
+              },
+            )),
         CustomTextField(
-          controller: _passwordController,
-          label: 'Password',
-          hintText: 'Enter your password',
-          isPassword: true,
-          obscureText: _obscureText,
-          toggleObscureText: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-        ),
-        CustomTextField(
-          controller: _mobileController,
+          controller: signupController.mobilenumber,
           label: 'Mobile Number',
           hintText: 'Enter your mobile number',
           keyboardType: TextInputType.phone,
         ),
         CustomTextField(
-          controller: _dobController,
+          controller: signupController.dateofbirth,
           label: 'Date of Birth',
           hintText: 'Enter your date of birth',
           keyboardType: TextInputType.datetime,
@@ -135,26 +114,30 @@ class _TextFFSignupState extends State<TextFFSignup> {
         SizedBox(
           width: double.infinity,
           height: 50,
-          child: ElevatedButton(
-            onPressed: () {
-              Get.toNamed('/login');
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xffE95322),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              elevation: 2,
-            ),
-            child: const Text(
-              'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          child: Obx(() => ElevatedButton(
+                onPressed: signupController.isLoading.value
+                    ? null
+                    : () {
+                        signupController.signUp();
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffE95322),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 2,
+                ),
+                child: signupController.isLoading.value
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+              )),
         ),
       ],
     );
