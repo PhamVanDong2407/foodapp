@@ -22,6 +22,7 @@ class SignupPage extends StatelessWidget {
               child: TextTitle(
                 text_Title_Auth: 'New Account',
                 onPressed: () {
+                  signupController.clearFields();
                   Get.toNamed('/login');
                 },
                 img_auth_page: 'assets/images/back_icon.png',
@@ -47,7 +48,8 @@ class SignupPage extends StatelessWidget {
                 ),
                 child: const SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -78,78 +80,94 @@ class TextFFSignup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomTextField(
+        Obx(() => CustomTextField(
           controller: signupController.fullname,
           label: 'Full Name',
           hintText: 'Enter your full name',
-        ),
-        CustomTextField(
+          errorText: signupController.fullnameError.value.isEmpty
+              ? null
+              : signupController.fullnameError.value,
+        )),
+        Obx(() => CustomTextField(
           controller: signupController.email,
           label: 'Email',
           hintText: 'Enter your email',
-        ),
+          errorText: signupController.emailError.value.isEmpty
+              ? null
+              : signupController.emailError.value,
+        )),
         Obx(() => CustomTextField(
-              controller: signupController.password,
-              label: 'Password',
-              hintText: 'Enter your password',
-              isPassword: true,
-              obscureText: signupController.isPasswordHidden.value,
-              toggleObscureText: () {
-                signupController.togglePasswordVisibility();
-              },
-            )),
-        CustomTextField(
+          controller: signupController.password,
+          label: 'Password',
+          hintText: 'Enter your password',
+          isPassword: true,
+          obscureText: signupController.isPasswordHidden.value,
+          toggleObscureText: () {
+            signupController.togglePasswordVisibility();
+          },
+          errorText: signupController.passwordError.value.isEmpty
+              ? null
+              : signupController.passwordError.value,
+        )),
+        Obx(() => CustomTextField(
           controller: signupController.mobilenumber,
           label: 'Mobile Number',
           hintText: 'Enter your mobile number',
           keyboardType: TextInputType.phone,
-        ),
-        CustomTextField(
+          errorText: signupController.mobileError.value.isEmpty
+              ? null
+              : signupController.mobileError.value,
+        )),
+        Obx(() => CustomTextField(
           controller: signupController.dateofbirth,
           label: 'Date of Birth',
           hintText: 'Enter your date of birth',
           keyboardType: TextInputType.datetime,
-        ),
+          errorText: signupController.dobError.value.isEmpty
+              ? null
+              : signupController.dobError.value,
+        )),
         const SizedBox(height: 10),
         SizedBox(
           width: double.infinity,
           height: 50,
           child: Obx(() => ElevatedButton(
-                onPressed: signupController.isLoading.value
-                    ? null
-                    : () {
-                        signupController.signUp();
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffE95322),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 2,
-                ),
-                child: signupController.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-              )),
+            onPressed: signupController.isLoading.value
+                ? null
+                : () {
+              signupController.signUp();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xffE95322),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              elevation: 2,
+            ),
+            child: signupController.isLoading.value
+                ? const CircularProgressIndicator(color: Colors.white)
+                : const Text(
+              'Sign Up',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )),
         ),
       ],
     );
   }
 }
 
-/// Widget cho phần đăng ký qua mạng xã hội
 class orSignupDiff extends StatelessWidget {
   const orSignupDiff({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final SignupController signupController = Get.find();
+
     return Column(
       children: [
         const Text('Or sign up with'),
@@ -165,6 +183,7 @@ class orSignupDiff extends StatelessWidget {
         const SizedBox(height: 10),
         GestureDetector(
           onTap: () {
+            signupController.clearFields();
             Get.toNamed('/login');
           },
           child: RichText(

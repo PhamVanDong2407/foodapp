@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignupController extends GetxController {
-  // Khai báo các biến điều khiển nhập liệu
   TextEditingController fullname = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -12,40 +11,68 @@ class SignupController extends GetxController {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  // Biến điều khiển trạng thái
   var isLoading = false.obs;
-  var errorMessage = ''.obs;
+  var fullnameError = ''.obs;
+  var emailError = ''.obs;
+  var passwordError = ''.obs;
+  var mobileError = ''.obs;
+  var dobError = ''.obs;
   var successMessage = ''.obs;
   var isPasswordHidden = true.obs;
 
-  // Hàm chuyển đổi trạng thái ẩn hiện mật khẩu
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
+  void clearFields() {
+    fullname.clear();
+    password.clear();
+    email.clear();
+    mobilenumber.clear();
+    dateofbirth.clear();
+    fullnameError.value = '';
+    emailError.value = '';
+    passwordError.value = '';
+    mobileError.value = '';
+    dobError.value = '';
+    successMessage.value = '';
+  }
 
-  // Hàm đăng ký người dùng
   void signUp() async {
-    if (fullname.text.isEmpty ||
-        password.text.isEmpty ||
-        email.text.isEmpty ||
-        mobilenumber.text.isEmpty ||
-        dateofbirth.text.isEmpty) {
-      errorMessage.value = 'Vui lòng điền đầy đủ thông tin';
-      Get.snackbar("Lỗi", errorMessage.value,
-          snackPosition: SnackPosition.BOTTOM);
-      return;
+    // Reset lỗi trước khi kiểm tra
+    fullnameError.value = '';
+    emailError.value = '';
+    passwordError.value = '';
+    mobileError.value = '';
+    dobError.value = '';
+
+    bool hasError = false;
+    if (fullname.text.isEmpty) {
+      fullnameError.value = 'Vui lòng nhập họ tên';
+      hasError = true;
+    }
+    if (email.text.isEmpty) {
+      emailError.value = 'Vui lòng nhập email';
+      hasError = true;
+    }
+    if (password.text.isEmpty) {
+      passwordError.value = 'Vui lòng nhập mật khẩu';
+      hasError = true;
+    }
+    if (mobilenumber.text.isEmpty) {
+      mobileError.value = 'Vui lòng nhập số điện thoại';
+      hasError = true;
+    }
+    if (dateofbirth.text.isEmpty) {
+      dobError.value = 'Vui lòng nhập ngày sinh';
+      hasError = true;
     }
 
-    // Reset lại thông báo
-    errorMessage.value = '';
-    successMessage.value = '';
+    if (hasError) return;
 
-    // Bắt đầu tạo tài khoản
     await registerUser(email.text, password.text);
   }
 
-  // Hàm tạo tài khoản
   Future<void> registerUser(String email, String password) async {
     try {
       isLoading.value = true;
@@ -57,24 +84,35 @@ class SignupController extends GetxController {
       Get.snackbar("Thành công", successMessage.value,
           snackPosition: SnackPosition.BOTTOM);
 
-      errorMessage.value = ''; // Reset thông báo lỗi nếu tạo thành công
+      clearFields();
+
+      // Có thể thêm điều hướng sau khi đăng ký thành công
+      // Get.offAllNamed('/home');
+
     } on FirebaseAuthException catch (ex) {
       if (ex.code == 'weak-password') {
-        errorMessage.value = 'Mật khẩu quá yếu';
+        passwordError.value = 'Mật khẩu quá yếu (tối thiểu 6 ký tự)';
       } else if (ex.code == 'email-already-in-use') {
-        errorMessage.value = 'Email đã được sử dụng';
+        emailError.value = 'Email đã được sử dụng';
       } else {
-        errorMessage.value = "Lỗi: ${ex.message}";
+        Get.snackbar("Lỗi", "Lỗi: ${ex.message}",
+            snackPosition: SnackPosition.BOTTOM);
       }
-      Get.snackbar("Lỗi", errorMessage.value,
-          snackPosition: SnackPosition.BOTTOM);
     } catch (ex) {
-      errorMessage.value = "Đã xảy ra lỗi, vui lòng thử lại!";
-      Get.snackbar("Lỗi", errorMessage.value,
+      Get.snackbar("Lỗi", "Đã xảy ra lỗi, vui lòng thử lại!",
           snackPosition: SnackPosition.BOTTOM);
-      print(ex);
     } finally {
       isLoading.value = false;
     }
+  }
+
+  @override
+  void onClose() {
+    fullname.dispose();
+    password.dispose();
+    email.dispose();
+    mobilenumber.dispose();
+    dateofbirth.dispose();
+    super.onClose();
   }
 }

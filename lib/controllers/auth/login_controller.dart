@@ -3,70 +3,83 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  // Các TextEditingController để người dùng nhập thông tin
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  // Trạng thái để quản lý việc xử lý đăng nhập
   var isLoading = false.obs;
-  var errorMessage = ''.obs;
+  var emailError = ''.obs;
+  var passwordError = ''.obs;
   var successMessage = ''.obs;
   var isPasswordHidden = true.obs;
 
-  // Hàm chuyển đổi trạng thái hiển thị mật khẩu
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
-  // Hàm đăng nhập người dùng
+  void clearFields() {
+    email.clear();
+    password.clear();
+    emailError.value = '';
+    passwordError.value = '';
+    successMessage.value = '';
+  }
+
   void onLogin() async {
-    if (email.text.isEmpty || password.text.isEmpty) {
-      errorMessage.value = 'Vui lòng điền đầy đủ thông tin!';
-      Get.snackbar("Lỗi", errorMessage.value,
-          snackPosition: SnackPosition.BOTTOM);
-      return;
+    emailError.value = '';
+    passwordError.value = '';
+
+    bool hasError = false;
+    if (email.text.isEmpty) {
+      emailError.value = 'Vui lòng nhập email hoặc số điện thoại';
+      hasError = true;
+    }
+    if (password.text.isEmpty) {
+      passwordError.value = 'Vui lòng nhập mật khẩu';
+      hasError = true;
     }
 
-    // Reset thông báo
-    errorMessage.value = '';
-    successMessage.value = '';
+    if (hasError) return;
 
     await loginAccount(email.text, password.text);
   }
 
-  // Hàm đăng nhập
   Future<void> loginAccount(String email, String password) async {
     try {
-      isLoading.value = true; // Bật trạng thái loading
+      isLoading.value = true;
 
-      // Đăng nhập người dùng
       await auth.signInWithEmailAndPassword(email: email, password: password);
 
-      // Hiển thị thông báo đăng nhập thành công
       successMessage.value = "Đăng nhập thành công!";
       Get.snackbar("Thành công", successMessage.value,
           snackPosition: SnackPosition.BOTTOM);
 
-      errorMessage.value = ''; // Reset thông báo lỗi nếu đăng nhập thành công
+      clearFields();
+
+      // Uncomment và điều chỉnh nếu bạn muốn chuyển hướng sau khi đăng nhập
+      // Get.offAllNamed('/home');
     } on FirebaseAuthException catch (ex) {
       if (ex.code == "user-not-found") {
-        errorMessage.value = "Email không tồn tại, vui lòng kiểm tra lại!";
+        emailError.value = "Email không tồn tại!";
       } else if (ex.code == "wrong-password") {
-        errorMessage.value = "Mật khẩu sai, vui lòng thử lại!";
+        passwordError.value = "Mật khẩu không đúng!";
       } else {
-        errorMessage.value = "Lỗi: ${ex.message}";
+        Get.snackbar("Lỗi", "Lỗi: ${ex.message}",
+            snackPosition: SnackPosition.BOTTOM);
       }
-      Get.snackbar("Lỗi", errorMessage.value,
-          snackPosition: SnackPosition.BOTTOM);
     } catch (ex) {
-      errorMessage.value = "Đã xảy ra lỗi, vui lòng thử lại!";
-      Get.snackbar("Lỗi", errorMessage.value,
+      Get.snackbar("Lỗi", "Đã xảy ra lỗi, vui lòng thử lại!",
           snackPosition: SnackPosition.BOTTOM);
-      print(ex);
     } finally {
-      isLoading.value = false; // Tắt trạng thái loading
+      isLoading.value = false;
     }
+  }
+
+  @override
+  void onClose() {
+    email.dispose();
+    password.dispose();
+    super.onClose();
   }
 }

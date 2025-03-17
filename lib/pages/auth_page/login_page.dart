@@ -119,6 +119,10 @@ class TextFFLogin extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide.none,
             ),
+            errorText: loginController.emailError.value.isEmpty
+                ? null
+                : loginController.emailError.value,
+            errorStyle: const TextStyle(color: Colors.red),
           ),
         ),
         const SizedBox(height: 25),
@@ -163,6 +167,10 @@ class TextFFLogin extends StatelessWidget {
                     loginController.togglePasswordVisibility();
                   },
                 ),
+                errorText: loginController.passwordError.value.isEmpty
+                    ? null
+                    : loginController.passwordError.value,
+                errorStyle: const TextStyle(color: Colors.red),
               ),
             )),
         const SizedBox(height: 20),
@@ -170,6 +178,7 @@ class TextFFLogin extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: GestureDetector(
             onTap: () {
+              loginController.clearFields();
               Get.toNamed('/setpassword');
             },
             child: const Text(
@@ -221,6 +230,8 @@ class orLoginDiff extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LoginController loginController = Get.find();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -238,6 +249,7 @@ class orLoginDiff extends StatelessWidget {
         const SizedBox(height: 20),
         GestureDetector(
           onTap: () {
+            loginController.clearFields();
             Get.toNamed('/signup');
           },
           child: RichText(
