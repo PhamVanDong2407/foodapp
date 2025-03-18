@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 
 class ActionButton extends StatelessWidget {
   final String assetPath;
+  final VoidCallback onPressed;
 
-  const ActionButton({super.key, required this.assetPath});
+  const ActionButton({
+    super.key,
+    required this.assetPath,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: onPressed, // Use the provided onPressed callback
       style: IconButton.styleFrom(
         backgroundColor: Colors.white,
         shape: const CircleBorder(),

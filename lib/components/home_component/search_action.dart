@@ -7,15 +7,28 @@ class SearchAndActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          Expanded(child: SearchField()),
-          SizedBox(width: 10),
-          ActionButton(assetPath: 'assets/images/cart.png'),
-          ActionButton(assetPath: 'assets/images/noti.png'),
-          ActionButton(assetPath: 'assets/images/pro5.png'),
+          const Expanded(child: SearchField()),
+          const SizedBox(width: 10),
+          ActionButton(
+            assetPath: 'assets/images/cart.png',
+            onPressed: () {},
+          ),
+          ActionButton(
+            assetPath: 'assets/images/noti.png',
+            onPressed: () {},
+          ),
+          Builder(
+            builder: (context) => ActionButton(
+              assetPath: 'assets/images/pro5.png',
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer(); // Mở endDrawer
+              },
+            ),
+          ),
         ],
       ),
     );
