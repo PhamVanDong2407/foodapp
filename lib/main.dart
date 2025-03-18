@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:foodapp/firebase_options.dart';
+import 'package:foodapp/pages/home_page/home_page.dart';
 import 'package:foodapp/pages/launch_page/splash_page.dart';
 import 'package:foodapp/routes/route.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: pages,
-      home: const SplashPage(),
+      home: const HomePage(),
     );
   }
 }

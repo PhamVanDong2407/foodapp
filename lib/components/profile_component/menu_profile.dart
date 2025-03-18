@@ -26,6 +26,7 @@ class menuProfile extends StatelessWidget {
             AssetImage(imgProfile),
           ),
         ),
+        const SizedBox(width: 15),
         Text(
           nameProfile,
           style: const TextStyle(

@@ -18,8 +18,9 @@ class logoutProfile extends StatelessWidget {
             color: Color(0xffE95322),
           ),
         ),
+        const SizedBox(width: 15),
         const Text(
-          'Logout',
+          'Log Out',
           style: TextStyle(
             color: Color(0xffF3E9B5),
             fontSize: 20,
