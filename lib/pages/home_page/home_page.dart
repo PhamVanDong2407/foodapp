@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/components/home_page/actionbtn_bestseller.dart';
+import 'package:foodapp/components/home_page/recommend.dart';
+import '../../components/bottomNav.dart';
 import '../../components/content_area.dart';
 import '../../components/home_page/actionbtn_content.dart';
 import '../../components/home_page/search_action.dart';
@@ -29,6 +31,7 @@ class HomePage extends StatelessWidget {
                       SizedBox(height: 5),
                       Line(),
                       ActionbtnBestseller(),
+                      Recommend(),
                     ],
                   ),
                 ),
@@ -37,6 +40,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: Bottomnav(), // Thêm thanh điều hướng dưới cùng
     );
   }
 }

@@ -10,7 +10,9 @@ class ContentArea extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
-        height: 750,
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height * 0.8, // Chiều cao tối thiểu là 80% màn hình
+        ),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -25,8 +27,7 @@ class ContentArea extends StatelessWidget {
             ),
           ],
         ),
-        child: child ??
-            const SizedBox(), // Nếu không có child, render một widget rỗng
+        child: child ?? const SizedBox(), // Nếu không có child, render một widget rỗng
       ),
     );
   }

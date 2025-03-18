@@ -90,19 +90,20 @@ class ImgBestSeller extends StatelessWidget {
           icon: Image.asset(imagePath),
         ),
         Positioned(
-          bottom: 10,
-          right: 10,
+          bottom: 8, // Giảm khoảng cách từ bottom
+          right: 8, // Giảm khoảng cách từ right
           child: Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(3), // Giảm padding từ 5 xuống 3
             decoration: BoxDecoration(
               color: const Color(0xffE95322),
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(4), // Giảm bán kính bo góc
             ),
             child: Text(
               price,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                fontSize: 12, // Giảm font size từ mặc định xuống 12
               ),
             ),
           ),
@@ -126,7 +127,6 @@ class _SlideBannerState extends State<SlideBanner> {
   @override
   void initState() {
     super.initState();
-    // Tự động chuyển trang sau mỗi 3 giây
     Future.delayed(const Duration(seconds: 1), () {
       _autoScrollBanner();
     });
@@ -228,9 +228,13 @@ class _SlideBannerState extends State<SlideBanner> {
                         ),
                       ),
                       Expanded(
-                        child: Image.asset(
-                          'assets/images/Photo Pizza.png',
-                          fit: BoxFit.cover,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Image.asset(
+                            'assets/images/Photo Pizza.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ],
