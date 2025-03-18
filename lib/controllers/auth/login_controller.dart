@@ -53,12 +53,12 @@ class LoginController extends GetxController {
 
       successMessage.value = "Đăng nhập thành công!";
       Get.snackbar("Thành công", successMessage.value,
-          snackPosition: SnackPosition.BOTTOM);
+          snackPosition: SnackPosition.TOP);
 
       clearFields();
 
       // Uncomment và điều chỉnh nếu bạn muốn chuyển hướng sau khi đăng nhập
-      // Get.offAllNamed('/home');
+      Get.offAllNamed('/home');
     } on FirebaseAuthException catch (ex) {
       if (ex.code == "user-not-found") {
         emailError.value = "Email không tồn tại!";
@@ -66,11 +66,11 @@ class LoginController extends GetxController {
         passwordError.value = "Mật khẩu không đúng!";
       } else {
         Get.snackbar("Lỗi", "Lỗi: ${ex.message}",
-            snackPosition: SnackPosition.BOTTOM);
+            snackPosition: SnackPosition.TOP);
       }
     } catch (ex) {
       Get.snackbar("Lỗi", "Đã xảy ra lỗi, vui lòng thử lại!",
-          snackPosition: SnackPosition.BOTTOM);
+          snackPosition: SnackPosition.TOP);
     } finally {
       isLoading.value = false;
     }

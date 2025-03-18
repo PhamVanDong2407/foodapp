@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: pages,
-      // home: const SplashPage(),
-      home: const HomePage(),
+      home: const SplashPage(),
     );
   }
 }
