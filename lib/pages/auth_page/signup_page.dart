@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../components/auth_page/SocialButton.dart';
-import '../../components/auth_page/customTextField.dart';
-import '../../components/auth_page/text_title.dart';
+import '../../components/auth_component/SocialButton.dart';
+import '../../components/auth_component/customTextField.dart';
+import '../../components/auth_component/text_title.dart';
 import '../../controllers/auth/signup_controller.dart';
 
 class SignupPage extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:foodapp/components/home_page/actionbtn_bestseller.dart';
-import 'package:foodapp/components/home_page/recommend.dart';
+import 'package:foodapp/components/home_component/actionbtn_bestseller.dart';
+import 'package:foodapp/components/home_component/recommend.dart';
 import '../../components/bottomNav.dart';
 import '../../components/content_area.dart';
-import '../../components/home_page/actionbtn_content.dart';
-import '../../components/home_page/search_action.dart';
+import '../../components/home_component/actionbtn_content.dart';
+import '../../components/home_component/search_action.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

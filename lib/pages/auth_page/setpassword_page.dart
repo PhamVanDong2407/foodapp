@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../components/auth_page/customTextField.dart';
-import '../../components/auth_page/text_title.dart';
+import '../../components/auth_component/customTextField.dart';
+import '../../components/auth_component/text_title.dart';
 
 class SetpasswordPage extends StatefulWidget {
   const SetpasswordPage({super.key});

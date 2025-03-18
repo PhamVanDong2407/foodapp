@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../components/onboarding_page/content.dart';
-import '../../components/onboarding_page/image_bgr.dart';
+import '../../components/onboarding_component/content.dart';
+import '../../components/onboarding_component/image_bgr.dart';
 
 class OnboardingPage2 extends StatelessWidget {
   const OnboardingPage2({super.key});

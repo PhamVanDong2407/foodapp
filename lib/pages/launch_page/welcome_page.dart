@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../components/launch_page/button.dart';
-import '../../components/launch_page/text_welcome_page.dart';
+import '../../components/launch_component/button.dart';
+import '../../components/launch_component/text_welcome_page.dart';
 import 'package:get/get.dart';
 
 class WelcomePage extends StatelessWidget {

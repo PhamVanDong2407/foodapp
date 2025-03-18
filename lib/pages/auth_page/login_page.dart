@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodapp/components/auth_page/SocialButton.dart';
+import 'package:foodapp/components/auth_component/SocialButton.dart';
 import 'package:get/get.dart';
 import '../../controllers/auth/login_controller.dart';
 
