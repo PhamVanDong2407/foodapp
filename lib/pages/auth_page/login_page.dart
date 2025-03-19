@@ -114,7 +114,7 @@ class TextFFLogin extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide.none,
@@ -136,43 +136,43 @@ class TextFFLogin extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Obx(() => TextFormField(
-              controller: loginController.password,
-              obscureText: loginController.isPasswordHidden.value,
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
+          controller: loginController.password,
+          obscureText: loginController.isPasswordHidden.value,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+          ),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: const Color(0xffF3E9B5),
+            hintText: 'Nhập mật khẩu',
+            hintStyle: TextStyle(
+              color: Colors.grey[500],
+              fontWeight: FontWeight.w400,
+            ),
+            contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide.none,
+            ),
+            suffixIcon: IconButton(
+              icon: Icon(
+                loginController.isPasswordHidden.value
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+                color: const Color(0xffE95322),
               ),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color(0xffF3E9B5),
-                hintText: 'Nhập mật khẩu',
-                hintStyle: TextStyle(
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.w400,
-                ),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    loginController.isPasswordHidden.value
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: const Color(0xffE95322),
-                  ),
-                  onPressed: () {
-                    loginController.togglePasswordVisibility();
-                  },
-                ),
-                errorText: loginController.passwordError.value.isEmpty
-                    ? null
-                    : loginController.passwordError.value,
-                errorStyle: const TextStyle(color: Colors.red),
-              ),
-            )),
+              onPressed: () {
+                loginController.togglePasswordVisibility();
+              },
+            ),
+            errorText: loginController.passwordError.value.isEmpty
+                ? null
+                : loginController.passwordError.value,
+            errorStyle: const TextStyle(color: Colors.red),
+          ),
+        )),
         const SizedBox(height: 20),
         Align(
           alignment: Alignment.centerRight,
@@ -196,29 +196,29 @@ class TextFFLogin extends StatelessWidget {
           width: double.infinity,
           height: 50,
           child: Obx(() => ElevatedButton(
-                onPressed: loginController.isLoading.value
-                    ? null
-                    : () {
-                        loginController.onLogin();
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffE95322),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 2,
-                ),
-                child: loginController.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'Đăng Nhập',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-              )),
+            onPressed: loginController.isLoading.value
+                ? null
+                : () {
+              loginController.onLogin();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xffE95322),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              elevation: 2,
+            ),
+            child: loginController.isLoading.value
+                ? const CircularProgressIndicator(color: Colors.white)
+                : const Text(
+              'Đăng Nhập',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )),
         ),
       ],
     );

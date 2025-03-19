@@ -80,7 +80,7 @@ class TextFFSignup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Obx(
-          () => CustomTextField(
+              () => CustomTextField(
             controller: signupController.fullname,
             label: 'Họ và tên',
             hintText: 'Nhập họ và tên',
@@ -91,7 +91,7 @@ class TextFFSignup extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Obx(
-          () => CustomTextField(
+              () => CustomTextField(
             controller: signupController.email,
             label: 'Email',
             hintText: 'Nhập email',
@@ -102,7 +102,7 @@ class TextFFSignup extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Obx(
-          () => CustomTextField(
+              () => CustomTextField(
             controller: signupController.password,
             label: 'Mật khẩu',
             hintText: 'Nhập mật khẩu',
@@ -118,7 +118,7 @@ class TextFFSignup extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Obx(
-          () => CustomTextField(
+              () => CustomTextField(
             controller: signupController.mobilenumber,
             label: 'Số điện thoại',
             hintText: 'Nhập số điện thoại',
@@ -130,7 +130,7 @@ class TextFFSignup extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Obx(
-          () => CustomTextField(
+              () => CustomTextField(
             controller: signupController.dateofbirth,
             label: 'Ngày sinh',
             hintText: 'Nhập ngày sinh',
@@ -145,12 +145,12 @@ class TextFFSignup extends StatelessWidget {
           width: double.infinity,
           height: 45,
           child: Obx(
-            () => ElevatedButton(
+                () => ElevatedButton(
               onPressed: signupController.isLoading.value
                   ? null
                   : () {
-                      signupController.signUp();
-                    },
+                signupController.signUp();
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xffE95322),
                 shape: RoundedRectangleBorder(
@@ -161,13 +161,13 @@ class TextFFSignup extends StatelessWidget {
               child: signupController.isLoading.value
                   ? const CircularProgressIndicator(color: Colors.white)
                   : const Text(
-                      'Đăng ký',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                'Đăng ký',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),

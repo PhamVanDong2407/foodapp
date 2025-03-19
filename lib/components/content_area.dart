@@ -11,7 +11,7 @@ class ContentArea extends StatelessWidget {
       child: Container(
         width: double.infinity,
         constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height * 0.8, // Chiều cao tối thiểu là 80% màn hình
+          minHeight: MediaQuery.of(context).size.height * 1, // Chiều cao tối thiểu là 80% màn hình
         ),
         decoration: const BoxDecoration(
           color: Colors.white,

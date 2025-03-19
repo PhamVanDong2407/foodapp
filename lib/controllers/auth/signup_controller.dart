@@ -81,14 +81,17 @@ class SignupController extends GetxController {
           email: email, password: password);
 
       successMessage.value = 'Đăng ký thành công';
-      Get.snackbar("Thành công", successMessage.value,
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        "Thành công",
+        successMessage.value,
+        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.TOP,
+      );
 
       clearFields();
 
       // Có thể thêm điều hướng sau khi đăng ký thành công
-      // Get.offAllNamed('/home');
-
+      Get.offAllNamed('/login');
     } on FirebaseAuthException catch (ex) {
       if (ex.code == 'weak-password') {
         passwordError.value = 'Mật khẩu quá yếu (tối thiểu 6 ký tự)';
@@ -96,11 +99,11 @@ class SignupController extends GetxController {
         emailError.value = 'Email đã được sử dụng';
       } else {
         Get.snackbar("Lỗi", "Lỗi: ${ex.message}",
-            snackPosition: SnackPosition.BOTTOM);
+            snackPosition: SnackPosition.TOP);
       }
     } catch (ex) {
       Get.snackbar("Lỗi", "Đã xảy ra lỗi, vui lòng thử lại!",
-          snackPosition: SnackPosition.BOTTOM);
+          snackPosition: SnackPosition.TOP);
     } finally {
       isLoading.value = false;
     }

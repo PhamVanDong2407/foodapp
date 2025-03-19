@@ -51,26 +51,61 @@ class LoginController extends GetxController {
 
       await auth.signInWithEmailAndPassword(email: email, password: password);
 
-      successMessage.value = "Đăng nhập thành công!";
-      Get.snackbar("Thành công", successMessage.value,
-          snackPosition: SnackPosition.TOP);
+      successMessage.value = "Chào mừng bạn quay trở lại!";
+      Get.snackbar(
+        "Đăng nhập thành công!",
+        successMessage.value,
+        backgroundColor: Colors.green,
+        snackPosition: SnackPosition.TOP,
+      );
 
       clearFields();
 
       // Uncomment và điều chỉnh nếu bạn muốn chuyển hướng sau khi đăng nhập
       Get.offAllNamed('/home');
     } on FirebaseAuthException catch (ex) {
+      // Xử lý lỗi cụ thể với thông báo thân thiện hơn
       if (ex.code == "user-not-found") {
-        emailError.value = "Email không tồn tại!";
+        emailError.value = "Tài khoản không tồn tại!";
+        Get.snackbar(
+          "Lỗi đăng nhập",
+          "Tài khoản với email này không tồn tại!",
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.TOP,
+        );
       } else if (ex.code == "wrong-password") {
         passwordError.value = "Mật khẩu không đúng!";
+        Get.snackbar(
+          "Lỗi đăng nhập",
+          "Mật khẩu bạn nhập không chính xác!",
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.TOP,
+        );
+      } else if (ex.code == "invalid-email") {
+        emailError.value = "Email không hợp lệ!";
+        Get.snackbar(
+          "Lỗi đăng nhập",
+          "Định dạng email không đúng!",
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.TOP,
+        );
       } else {
-        Get.snackbar("Lỗi", "Lỗi: ${ex.message}",
-            snackPosition: SnackPosition.TOP);
+        // Xử lý các lỗi khác với thông báo chung
+        Get.snackbar(
+          "Lỗi đăng nhập",
+          "Đã xảy ra lỗi, vui lòng thử lại sau!",
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.TOP,
+        );
       }
     } catch (ex) {
-      Get.snackbar("Lỗi", "Đã xảy ra lỗi, vui lòng thử lại!",
-          snackPosition: SnackPosition.TOP);
+      // Xử lý lỗi không xác định
+      Get.snackbar(
+        "Lỗi",
+        "Đã xảy ra lỗi không mong muốn, vui lòng thử lại!",
+        backgroundColor: Colors.redAccent,
+        snackPosition: SnackPosition.TOP,
+      );
     } finally {
       isLoading.value = false;
     }
