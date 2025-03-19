@@ -4,6 +4,8 @@ import 'package:foodapp/pages/auth_page/signup_page.dart';
 import 'package:foodapp/pages/home_page/home_page.dart';
 import 'package:foodapp/pages/launch_page/splash_page.dart';
 import 'package:foodapp/pages/launch_page/welcome_page.dart';
+import 'package:foodapp/pages/my_profile_page/my_profile_page.dart';
+import 'package:foodapp/pages/myorder_page/myorder_page.dart';
 import 'package:foodapp/pages/onboarding_page/onboarding_page_1.dart';
 import 'package:foodapp/pages/onboarding_page/onboarding_page_2.dart';
 import 'package:foodapp/pages/onboarding_page/onboarding_page_3.dart';
@@ -45,5 +47,13 @@ final pages = [
   GetPage(
     name: '/home',
     page: () => const HomePage(),
+  ),
+  GetPage(
+    name: '/my_order',
+    page: () => const MyorderPage(),
+  ),
+  GetPage(
+    name: '/my_profile',
+    page: () => const MyProfilePage(),
   ),
 ];

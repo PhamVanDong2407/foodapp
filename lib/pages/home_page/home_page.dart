@@ -8,6 +8,7 @@ import '../../components/content_area.dart';
 import '../../components/home_component/actionbtn_content.dart';
 import '../../components/home_component/search_action.dart';
 import '../../components/profile_component/account_profile.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -71,13 +72,17 @@ class ProfileDrawer extends StatelessWidget {
               _buildMenuItem(
                 imgProfile: 'assets/images/pf1.png',
                 nameProfile: 'My Orders',
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/my_order');
+                },
               ),
               _buildDivider(),
               _buildMenuItem(
                 imgProfile: 'assets/images/pf2.png',
                 nameProfile: 'My Profile',
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('my_profile');
+                },
               ),
               _buildDivider(),
               _buildMenuItem(
