@@ -7,6 +7,7 @@ import '../../components/bottomNav.dart';
 import '../../components/content_area.dart';
 import '../../components/home_component/actionbtn_content.dart';
 import '../../components/home_component/search_action.dart';
+import '../../components/profile_component/account_profile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -64,7 +65,9 @@ class ProfileDrawer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              const SizedBox(height: 200),
+              const SizedBox(height: 100),
+              const AccountProfile(), // Thêm thông tin người dùng ở đây
+              const SizedBox(height: 20),
               _buildMenuItem(
                 imgProfile: 'assets/images/pf1.png',
                 nameProfile: 'My Orders',
@@ -108,7 +111,7 @@ class ProfileDrawer extends StatelessWidget {
               ),
               _buildDivider(),
               const SizedBox(height: 50),
-              const logoutProfile(),
+              const LogoutProfile(),
             ],
           ),
         ),
