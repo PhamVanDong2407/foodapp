@@ -1,3 +1,4 @@
+import 'package:foodapp/pages/address_page/address_page.dart';
 import 'package:foodapp/pages/auth_page/login_page.dart';
 import 'package:foodapp/pages/auth_page/setpassword_page.dart';
 import 'package:foodapp/pages/auth_page/signup_page.dart';
@@ -55,5 +56,9 @@ final pages = [
   GetPage(
     name: '/my_profile',
     page: () => const MyProfilePage(),
+  ),
+  GetPage(
+    name: '/my_address',
+    page: () => const AddressPage(),
   ),
 ];

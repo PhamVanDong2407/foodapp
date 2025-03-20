@@ -88,7 +88,9 @@ class ProfileDrawer extends StatelessWidget {
               _buildMenuItem(
                 imgProfile: 'assets/images/pf3.png',
                 nameProfile: 'Delivery Address',
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed('/my_address');
+                },
               ),
               _buildDivider(),
               _buildMenuItem(

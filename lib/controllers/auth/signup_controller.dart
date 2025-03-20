@@ -4,34 +4,49 @@ import 'package:get/get.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class SignupController extends GetxController {
-  TextEditingController fullname = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController mobilenumber = TextEditingController();
-  TextEditingController dateofbirth = TextEditingController();
+  // Các TextEditingController để quản lý input từ người dùng
+  TextEditingController fullname = TextEditingController(); // Họ và tên
+  TextEditingController password = TextEditingController(); // Mật khẩu
+  TextEditingController email = TextEditingController(); // Email
+  TextEditingController mobilenumber = TextEditingController(); // Số điện thoại
+  TextEditingController dateofbirth = TextEditingController(); // Ngày sinh
+  TextEditingController addressLabel = TextEditingController(); // Nhãn địa chỉ (VD: Nhà riêng)
+  TextEditingController addressDetails = TextEditingController(); // Chi tiết địa chỉ
 
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final DatabaseReference database = FirebaseDatabase.instance.ref();
+  final FirebaseAuth auth = FirebaseAuth.instance; // Instance của Firebase Auth
+  final DatabaseReference database = FirebaseDatabase.instance.ref(); // Reference tới Realtime Database
 
-  var isLoading = false.obs;
-  var fullnameError = ''.obs;
-  var emailError = ''.obs;
-  var passwordError = ''.obs;
-  var mobileError = ''.obs;
-  var dobError = ''.obs;
-  var successMessage = ''.obs;
-  var isPasswordHidden = true.obs;
+  // Các biến trạng thái
+  var isLoading = false.obs; // Trạng thái loading
+  var fullnameError = ''.obs; // Lỗi họ và tên
+  var emailError = ''.obs; // Lỗi email
+  var passwordError = ''.obs; // Lỗi mật khẩu
+  var mobileError = ''.obs; // Lỗi số điện thoại
+  var dobError = ''.obs; // Lỗi ngày sinh
+  var successMessage = ''.obs; // Thông báo thành công
+  var isPasswordHidden = true.obs; // Trạng thái ẩn/hiện mật khẩu
+  var addresses = <Map<dynamic, dynamic>>[].obs; // Danh sách địa chỉ
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadAddresses(); // Tải danh sách địa chỉ khi khởi tạo controller
+  }
+
+  // Hàm để ẩn/hiện mật khẩu
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
+  // Hàm để xóa các trường nhập liệu
   void clearFields() {
     fullname.clear();
     password.clear();
     email.clear();
     mobilenumber.clear();
     dateofbirth.clear();
+    addressLabel.clear();
+    addressDetails.clear();
     fullnameError.value = '';
     emailError.value = '';
     passwordError.value = '';
@@ -40,7 +55,9 @@ class SignupController extends GetxController {
     successMessage.value = '';
   }
 
+  // Hàm đăng ký tài khoản
   void signUp() async {
+    // Xóa các lỗi trước đó
     fullnameError.value = '';
     emailError.value = '';
     passwordError.value = '';
@@ -48,6 +65,7 @@ class SignupController extends GetxController {
     dobError.value = '';
 
     bool hasError = false;
+    // Kiểm tra các trường nhập liệu
     if (fullname.text.isEmpty) {
       fullnameError.value = 'Vui lòng nhập họ tên';
       hasError = true;
@@ -80,11 +98,11 @@ class SignupController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Tạo tài khoản Authentication
+      // Tạo tài khoản trên Firebase Authentication
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email.text, password: password.text);
 
-      // Lưu thông tin vào Realtime Database sau khi đăng ký thành công
+      // Lưu thông tin người dùng vào Realtime Database
       await saveUserProfile(userCredential.user!.uid);
 
       successMessage.value = 'Đăng ký thành công';
@@ -110,13 +128,12 @@ class SignupController extends GetxController {
     } catch (ex) {
       Get.snackbar("Lỗi", "Đã xảy ra lỗi, vui lòng thử lại!",
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.redAccent);
-      print("Lỗi không xác định: $ex");
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Hàm lưu thông tin người dùng lên Realtime Database
+  // Hàm lưu thông tin người dùng vào Realtime Database
   Future<void> saveUserProfile(String uid) async {
     try {
       Map<String, dynamic> userData = {
@@ -126,19 +143,15 @@ class SignupController extends GetxController {
         'dateofbirth': dateofbirth.text,
         'createdAt': ServerValue.timestamp,
       };
-
-      // Sử dụng set với một giá trị cụ thể để tránh lỗi null
       await database.child('users').child(uid).set(userData);
-      print("Đã lưu dữ liệu người dùng thành công");
     } catch (e) {
-      print("Lỗi khi lưu thông tin: $e");
       Get.snackbar("Lỗi", "Không thể lưu thông tin: $e",
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.redAccent);
-      throw e; // Ném lỗi để hàm gọi có thể bắt được
+      throw e;
     }
   }
 
-  // Hàm cập nhật thông tin profile lên Realtime Database
+  // Hàm cập nhật thông tin người dùng
   Future<void> updateUserProfile() async {
     try {
       User? user = auth.currentUser;
@@ -152,7 +165,6 @@ class SignupController extends GetxController {
           'updatedAt': ServerValue.timestamp,
         });
 
-        // Cập nhật email trong Firebase Authentication nếu thay đổi
         if (email.text != user.email) {
           await user.updateEmail(email.text);
         }
@@ -165,7 +177,6 @@ class SignupController extends GetxController {
         );
       }
     } catch (e) {
-      print("Lỗi khi cập nhật thông tin: $e");
       Get.snackbar("Lỗi", "Không thể cập nhật thông tin: $e",
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.redAccent);
     } finally {
@@ -173,16 +184,16 @@ class SignupController extends GetxController {
     }
   }
 
-  // Hàm tải thông tin profile từ Realtime Database
+  // Hàm tải thông tin người dùng từ Realtime Database
   Future<void> loadUserProfile() async {
     try {
       User? user = auth.currentUser;
       if (user != null) {
         DatabaseEvent event =
-            await database.child('users').child(user.uid).once();
+        await database.child('users').child(user.uid).once();
         if (event.snapshot.exists) {
           Map<dynamic, dynamic> data =
-              event.snapshot.value as Map<dynamic, dynamic>;
+          event.snapshot.value as Map<dynamic, dynamic>;
           fullname.text = data['fullname'] ?? '';
           email.text = data['email'] ?? '';
           mobilenumber.text = data['mobilenumber'] ?? '';
@@ -190,19 +201,76 @@ class SignupController extends GetxController {
         }
       }
     } catch (e) {
-      print("Lỗi khi tải thông tin: $e");
       Get.snackbar("Lỗi", "Không thể tải thông tin: $e",
+          snackPosition: SnackPosition.TOP, backgroundColor: Colors.redAccent);
+    }
+  }
+
+  // Hàm thêm địa chỉ mới
+  Future<void> addAddress() async {
+    try {
+      User? user = auth.currentUser;
+      if (user != null) {
+        isLoading.value = true;
+        String addressId = database.child('users').child(user.uid).child('addresses').push().key ?? '';
+        Map<String, dynamic> addressData = {
+          'label': addressLabel.text,
+          'details': addressDetails.text,
+          'createdAt': ServerValue.timestamp,
+        };
+        await database.child('users').child(user.uid).child('addresses').child(addressId).set(addressData);
+        Get.snackbar(
+          "Thành công",
+          "Địa chỉ đã được thêm!",
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.TOP,
+        );
+        addressLabel.clear();
+        addressDetails.clear();
+        loadAddresses();
+      }
+    } catch (e) {
+      Get.snackbar("Lỗi", "Không thể thêm địa chỉ: $e",
+          snackPosition: SnackPosition.TOP, backgroundColor: Colors.redAccent);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Hàm tải danh sách địa chỉ từ Realtime Database
+  Future<void> loadAddresses() async {
+    try {
+      User? user = auth.currentUser;
+      if (user != null) {
+        DatabaseEvent event = await database.child('users').child(user.uid).child('addresses').once();
+        if (event.snapshot.exists) {
+          Map<dynamic, dynamic> addressData = event.snapshot.value as Map<dynamic, dynamic>;
+          addresses.clear();
+          addressData.forEach((key, value) {
+            addresses.add({
+              'id': key,
+              'label': value['label'],
+              'details': value['details'],
+            });
+          });
+        }
+      }
+    } catch (e) {
+      Get.snackbar("Lỗi", "Không thể tải địa chỉ: $e",
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.redAccent);
     }
   }
 
   @override
   void onClose() {
+    // Giải phóng các controller khi không còn sử dụng
     fullname.dispose();
     password.dispose();
     email.dispose();
     mobilenumber.dispose();
     dateofbirth.dispose();
+    addressLabel.dispose();
+    addressDetails.dispose();
     super.onClose();
   }
 }
